@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>Git远程操作</title>
+      <link href="/YiZhouL.github.io/2020/11/09/git-remote-command/"/>
+      <url>/YiZhouL.github.io/2020/11/09/git-remote-command/</url>
+      
+        <content type="html"><![CDATA[<p>现在的项目几乎都是由多人合作完成维护的，通常会使用代码托管平台帮助团队管理、维护项目。</p><p>目前主流的平台有github、gitlab(可看做私人github)，这些平台同样使用git管理项目，而git提供了丰富的工具达到协作的目的。</p><h4 id="认证"><a href="#认证" class="headerlink" title="认证"></a>认证</h4><p>git需要和操作远程仓库前，要进行认证处理</p><p>git采用ssh连接，需要在github平台配置ssh公钥</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen  # 一路回车，会在~&#x2F;.ssh&#x2F;目录下生产公钥和私钥，将公钥添加到github的SSH配置中即可</span><br></pre></td></tr></table></figure><h4 id="操作核心"><a href="#操作核心" class="headerlink" title="操作核心"></a>操作核心</h4><ol><li>分支是本地与远程仓库交互的基本单位，任何与远程仓库有关的操作就是本地分支与远程分支的操作</li><li>只要把远程分支当做普通的本地分支操作即可</li><li>本质上是在本地维护远程分支</li></ol><p><strong>规范</strong></p><ol><li>团队协作的性质导致本地远程分支几乎不会是远程仓库中最新的，基本会滞后</li><li>本地远程分支不能直接提交(在工作目录修改后提交)，永远在自己的工作分支进行修改，然后合并到本地远程分支</li><li>依据1，将自己的工作合并到本地远程分支时，先从远程仓库更新本地远程分支</li><li>使用本地远程分支更新远程仓库对应分支</li></ol><p>之所以这样做，是因为git更新本地远程分支和远程仓库分支的时候默认采用ff合并</p><p>按照规范操作<strong>永远不会发生错误和冲突</strong>，只是一个ff合并，并且分支永远是一条线。</p><h4 id="本地关联远程仓库"><a href="#本地关联远程仓库" class="headerlink" title="本地关联远程仓库"></a>本地关联远程仓库</h4><h5 id="直接从远程仓库创建本地项目"><a href="#直接从远程仓库创建本地项目" class="headerlink" title="直接从远程仓库创建本地项目"></a>直接从远程仓库创建本地项目</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone url [dir]  #　克隆项目，自动创建本地分支并且和远程分支建立对应关系</span><br></pre></td></tr></table></figure><h5 id="手动关联远程仓库"><a href="#手动关联远程仓库" class="headerlink" title="手动关联远程仓库"></a>手动关联远程仓库</h5><p>git remote用来管理本地的远程仓库</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git remote -vv # 列出</span><br><span class="line">git remote add name url # 添加一个远程仓库</span><br><span class="line">git remote remove name</span><br><span class="line">git remote rename old new</span><br><span class="line">git remote set-url [--add] name new_url</span><br></pre></td></tr></table></figure><p>以上所有设置都会在.git/config体现</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># git remote add origin url1</span><br><span class="line">[remote &quot;origin&quot;]</span><br><span class="line">    url &#x3D; url1</span><br><span class="line">    fetch &#x3D; +refs&#x2F;heads&#x2F;*:refs&#x2F;remotes&#x2F;origin&#x2F;*</span><br><span class="line">    url &#x3D; url2  # git remote set-url --add origin url2</span><br><span class="line"># git remote add yforigin url3</span><br><span class="line">[remote &quot;yforigin&quot;]</span><br><span class="line">    url &#x3D; url3</span><br><span class="line">    fetch &#x3D; +refs&#x2F;heads&#x2F;*:refs&#x2F;remotes&#x2F;yforigin&#x2F;*</span><br></pre></td></tr></table></figure><p>fetch是git中的远程仓库引用及相关数据对象的下载器</p><p>remote会定义远程仓库的fetch设置，默认将会下载远程所有分支，标签默认不会下载</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git fetch [origin]  # 下载远程仓库分支，默认为origin</span><br><span class="line">git fetch --all    # 下载所有远程仓库</span><br><span class="line">git fetch -t    # 下载远程所有标签</span><br><span class="line">git fetch remote_name branch_or_tag # 拉取某个引用</span><br></pre></td></tr></table></figure><p>fetch拉取的引用都会放在refs/remotes/name/*</p><p>同时每次会生成FETCH_HEAD文件记录fetch的相关引用和信息，每次fetch都默认会覆写FETCH_HEAD</p><h4 id><a href="#" class="headerlink" title></a></h4><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>git的命令有丰富的参数可以完成很多场景下的操作，并不简单的局限于功能描述信息。这些参数都是在实际使用中有价值的，而这两篇主要记录标准的流程下必知必会的git基本命令</p><p>以后实际工作运用时有用的命令再更新吧。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Git </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Git本地操作</title>
       <link href="/YiZhouL.github.io/2020/11/09/git-local-command/"/>
       <url>/YiZhouL.github.io/2020/11/09/git-local-command/</url>
