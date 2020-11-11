@@ -167,7 +167,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/YiZhouL.github.io/2020/11/12/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" class="post-title-link" itemprop="url">字符编码</a>
+            <a href="/YiZhouL.github.io/2020/11/12/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" class="post-title-link" itemprop="url">字符编码和字符集</a>
         </h2>
 
         <div class="post-meta">
@@ -184,7 +184,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-11 16:44:25" itemprop="dateModified" datetime="2020-11-11T16:44:25Z">2020-11-11</time>
+                <time title="修改时间：2020-11-11 18:46:52" itemprop="dateModified" datetime="2020-11-11T18:46:52Z">2020-11-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -212,14 +212,24 @@
 <p>字符集定义了字符和码点的一一映射，编码定义了码点和二进制码的一一映射。</p>
 <p>字符集对最终的二进制码是什么不感兴趣，编码的结果也只对字符集的码点负责。</p>
 <p>字符集实质上也是一种默认的编码，码点是一个整数，整数在计算机中默认的存储方式就是一种编码。</p>
-<p>一个字节最多有 $2^8$ 个映射，在英语国家已经足够了，ASCII就是单字节编码。但对于别的国家来说远远不够的。这里已经有许多种编码方式，unicode字符集(目前主流语言几乎都使用)融合了世界上所有国家、文化的字符，也因此需要用很多字节来<br>产生映射。</p>
-<p>字符集的确隐含了一种编码，但是有些来说不适合传输，效率太低了。例如在英语国家使用unicode编码(默认的)，那么本来可以用单字节传输一个字符，现在需要使用3个或4个甚至更多来传输一个字符。</p>
+<p>一个字节最多有$2^8$个映射，在英语国家已经足够了，ASCII就是单字节编码。但对于别的国家来说远远不够的。这里已经有许多种编码方式，unicode字符集(目前主流语言几乎都使用)融合了世界上所有国家、文化的字符，也因此需要用很多字节来<br>产生映射。</p>
+<p>字符集的确隐含了一种编码，但是有些不适合传输，效率太低了。例如在英语国家使用unicode编码(默认的)，那么本来可以用单字节传输一个字符，现在需要使用3个或4个甚至更多来传输一个字符。</p>
 <p>因此，字符集往往采用别的编码方式来实现，最主要目的是提高传输效率。例如，UTF-8、UTF-16等是unicode字符集的编码方式，适用于不同场景。</p>
 <p>UTF-8兼容了ASCII，英文字符就像ASCII编码的一样。</p>
 <h4 id="大小端"><a href="#大小端" class="headerlink" title="大小端"></a>大小端</h4><p>大小端指的是多字节数据对象在计算机内存中存储的字节顺序</p>
 <p>内存地址是有序的，<strong>低地址—–&gt;高地址</strong>；因此对于一个多字节数据对象来说就有两种存储顺序。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">多字节对象：0x12345678</span><br><span class="line">内存地址：低 -----&gt; 高</span><br><span class="line">大端:   0x12345678</span><br><span class="line">小端    0x78563412</span><br></pre></td></tr></table></figure>
 <p>端指的字节尾端，大小指的内存高低地址</p>
+<h4 id="Base64编码"><a href="#Base64编码" class="headerlink" title="Base64编码"></a>Base64编码</h4><blockquote>
+<p>base64是使用64个可打印字符表示二进制流的一种方法，可以用来传输二进制文件、图片等，是网络上常见的传输编码方式。</p>
+</blockquote>
+<h5 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h5><ol>
+<li>将二进制流分组，每组24位<br> <img src="/YiZhouL.github.io/2020/11/12/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/2020-11-12%2001-58-35%20%E7%9A%84%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png"></li>
+<li>再次分组，每组六位，然后按照提前定义好的映射表进行编码<br> <img src="/YiZhouL.github.io/2020/11/12/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/base1.png"></li>
+<li>最后一组如果不满24位进行补位，当不满6位补0，6位组没有时，编码成“=”</li>
+<li><img src="/YiZhouL.github.io/2020/11/12/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/base2.png"></li>
+</ol>
+<p>其中映射表就是ASCII中的64位可打印字符，只是值不一样了。</p>
 
       
     </div>
@@ -737,10 +747,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-11-08 21:15:02 / 修改时间：13:52:39" itemprop="dateCreated datePublished" datetime="2020-11-08T21:15:02Z">2020-11-08</time>
+              <time title="创建时间：2020-11-08 21:15:02" itemprop="dateCreated datePublished" datetime="2020-11-08T21:15:02Z">2020-11-08</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-11 17:21:42" itemprop="dateModified" datetime="2020-11-11T17:21:42Z">2020-11-11</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -781,7 +797,7 @@
 </ol>
 <h4 id="Ubuntu安装后设置"><a href="#Ubuntu安装后设置" class="headerlink" title="Ubuntu安装后设置"></a>Ubuntu安装后设置</h4><ol>
 <li><p>系统换源<br> 将以下内容替换已有 <strong>/etc/apt/sources.list</strong> (源文件备份哦)</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic main restricted universe multiverse</span><br><span class="line">    deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-security main restricted universe multiverse</span><br><span class="line">    deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-updates main restricted universe multiverse</span><br><span class="line">    deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-proposed main restricted universe multiverse</span><br><span class="line">    deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-backports main restricted universe multiverse</span><br><span class="line">    deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic main restricted universe multiverse</span><br><span class="line">    deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-security main restricted universe multiverse</span><br><span class="line">    deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-updates main restricted universe multiverse</span><br><span class="line">    deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-proposed main restricted universe multiverse</span><br><span class="line">    deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-backports main restricted universe multiverse</span><br></pre></td></tr></table></figure></li>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic main restricted universe multiverse</span><br><span class="line">deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-security main restricted universe multiverse</span><br><span class="line">deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-updates main restricted universe multiverse</span><br><span class="line">deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-proposed main restricted universe multiverse</span><br><span class="line">deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-backports main restricted universe multiverse</span><br><span class="line">deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic main restricted universe multiverse</span><br><span class="line">deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-security main restricted universe multiverse</span><br><span class="line">deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-updates main restricted universe multiverse</span><br><span class="line">deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-proposed main restricted universe multiverse</span><br><span class="line">deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; bionic-backports main restricted universe multiverse</span><br></pre></td></tr></table></figure></li>
 <li><p>安装<a target="_blank" rel="noopener" href="https://pinyin.sogou.com/linux/?r=pinyin">搜狗输入法</a><br> 装完在 <strong>fcitx Configuration</strong> 中设置:</p>
 <p> <img src="/YiZhouL.github.io/2020/11/09/Win10-Ubuntu20-04%E5%AE%89%E8%A3%85%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/system1.png"></p>
 </li>
