@@ -153,6 +153,92 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://yizhoul.github.io/2020/11/12/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/YiZhouL.github.io/images/avatar.gif">
+      <meta itemprop="name" content="Aixia">
+      <meta itemprop="description" content="起名好难">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="爱夏狂欢">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/YiZhouL.github.io/2020/11/12/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" class="post-title-link" itemprop="url">字符编码</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-12 00:40:14" itemprop="dateCreated datePublished" datetime="2020-11-12T00:40:14Z">2020-11-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-11 16:44:25" itemprop="dateModified" datetime="2020-11-11T16:44:25Z">2020-11-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/YiZhouL.github.io/categories/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" itemprop="url" rel="index"><span itemprop="name">字符编码</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>计算机使用二进制存储信息，将二进制流翻译成有意义的字符过程称为编码(encode)，反之为解码(decode)。</p>
+<p>编码过程是按照一定方向进行的，这个方向称为字符集。字符集定义了一种整数值和字符的一一映射关系，例如ASCII和现在统一标准的unicode，包含了世界上不同国家、文化的符号；该值也称为码点，一个字符有唯一的码点。</p>
+<p>字符集定义了字符和码点的一一映射，编码定义了码点和二进制码的一一映射。</p>
+<p>字符集对最终的二进制码是什么不感兴趣，编码的结果也只对字符集的码点负责。</p>
+<p>字符集实质上也是一种默认的编码，码点是一个整数，整数在计算机中默认的存储方式就是一种编码。</p>
+<p>一个字节最多有 $2^8$ 个映射，在英语国家已经足够了，ASCII就是单字节编码。但对于别的国家来说远远不够的。这里已经有许多种编码方式，unicode字符集(目前主流语言几乎都使用)融合了世界上所有国家、文化的字符，也因此需要用很多字节来<br>产生映射。</p>
+<p>字符集的确隐含了一种编码，但是有些来说不适合传输，效率太低了。例如在英语国家使用unicode编码(默认的)，那么本来可以用单字节传输一个字符，现在需要使用3个或4个甚至更多来传输一个字符。</p>
+<p>因此，字符集往往采用别的编码方式来实现，最主要目的是提高传输效率。例如，UTF-8、UTF-16等是unicode字符集的编码方式，适用于不同场景。</p>
+<p>UTF-8兼容了ASCII，英文字符就像ASCII编码的一样。</p>
+<h4 id="大小端"><a href="#大小端" class="headerlink" title="大小端"></a>大小端</h4><p>大小端指的是多字节数据对象在计算机内存中存储的字节顺序</p>
+<p>内存地址是有序的，<strong>低地址—–&gt;高地址</strong>；因此对于一个多字节数据对象来说就有两种存储顺序。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">多字节对象：0x12345678</span><br><span class="line">内存地址：低 -----&gt; 高</span><br><span class="line">大端:   0x12345678</span><br><span class="line">小端    0x78563412</span><br></pre></td></tr></table></figure>
+<p>端指的字节尾端，大小指的内存高低地址</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://yizhoul.github.io/2020/11/09/git-remote-command/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -878,14 +964,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/YiZhouL.github.io/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/YiZhouL.github.io/categories/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>
